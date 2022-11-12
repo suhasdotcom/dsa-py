@@ -32,3 +32,11 @@ def test_returns_correct_index_on_negative_element_iterable_as_well():
     assert linear_search.linear_search(n_iter, -7) == 1
     assert linear_search.linear_search(n_iter, -99) == 0
     assert linear_search.linear_search(n_iter, 0) == 4
+
+
+def test_returns_correct_index_on_negative_unsorted_element_iterable_as_well():
+    n_iter = [100, -1, -99, 7, -7, -3, 0, 9, 99, 78]
+    assert linear_search.linear_search(n_iter, 100) == 0
+    assert linear_search.linear_search(n_iter, -7) == 4
+    assert linear_search.linear_search(n_iter, 99) == 8
+    assert linear_search.linear_search(n_iter, 0) == 6
