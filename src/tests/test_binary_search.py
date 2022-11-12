@@ -41,3 +41,4 @@ def test_returns_correct_index_on_negative_element_iterable_as_well():
     assert binary_search.binary_search(n_iter, -7) == 1
     assert binary_search.binary_search(n_iter, -99) == 0
     assert binary_search.binary_search(n_iter, 0) == 4
+    # assert binary_search.binary_search(n_iter, 56) == -1
