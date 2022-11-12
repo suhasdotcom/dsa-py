@@ -16,6 +16,13 @@ def binary_search(a_iterable, item_to_find):
 
 
 def _binary_search_helper(a_iterable, item):
+    """
+    iterative binary-search helper function
+
+    :param a_iterable: a sorted iterable
+    :param item: item to judge position of
+    :return: a tuple denoting low, high and mid indices
+    """
     a_iterable_length = len(a_iterable)
     high = a_iterable_length
     low = 0
