@@ -14,16 +14,7 @@ def test_one_element_matched_returns_index_0():
 
 
 def test_two_element_first_element_matched_returns_1():
-    """
-    This method needs some explanation
-
-    Actually, intuitively someone can argue that this method should return the 0th index for searching in an iterable
-    having two equal elements of size two but that is not how the binary-search works. The mid here will be
-    calculated as (0+2)//2 = 1 and as 1st indexed element itself is the element which was being searched hence,
-    binary-search returns
-    :return: None
-    """
-    assert binary_search.binary_search([1, 1], 1) == 1
+    assert binary_search.binary_search([1, 1], 1) == 0
 
 
 def test_three_element_iterable_matched_returns_1():

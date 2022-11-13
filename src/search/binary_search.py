@@ -12,7 +12,7 @@ def binary_search(a_iterable, item_to_find):
     :return: index of item if found, -1 if not found
     """
     low, high, mid = _binary_search_helper(a_iterable, item_to_find)
-    return mid if low < high else -1
+    return mid if low <= high else -1
 
 
 def find_position_in_sorted_iterable(a_iterable, item_to_insert):
@@ -41,17 +41,17 @@ def _binary_search_helper(a_iterable, item):
     :return: a tuple denoting low, high and mid indices
     """
     a_iterable_length = len(a_iterable)
-    high = a_iterable_length
+    high = a_iterable_length - 1
     low = 0
     mid = (low + high) // 2
 
-    while low < high:
+    while low <= high:
         mid = (low + high) // 2
         if item == a_iterable[mid]:
             break
         elif item > a_iterable[mid]:
-            low = mid
+            low = mid + 1
         elif item < a_iterable[mid]:
-            high = mid
+            high = mid - 1
 
     return low, high, mid
