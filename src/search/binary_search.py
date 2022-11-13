@@ -24,12 +24,7 @@ def find_position_in_sorted_iterable(a_iterable, item_to_insert):
     :return: index where to insert this item to
     """
     low, high, mid = _binary_search_helper(a_iterable, item_to_insert)
-    if low <= high:
-        return mid
-    if a_iterable[mid] <= a_iterable[low]:
-        return mid - 1
-    if a_iterable[mid] >= a_iterable[high]:
-        return mid + 1
+    return mid if low <= high else high + 1
 
 
 def _binary_search_helper(a_iterable, item):
