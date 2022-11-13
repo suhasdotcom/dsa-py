@@ -40,3 +40,4 @@ def test_returns_correct_index_on_negative_unsorted_element_iterable_as_well():
     assert linear_search.linear_search(n_iter, -7) == 4
     assert linear_search.linear_search(n_iter, 99) == 8
     assert linear_search.linear_search(n_iter, 0) == 6
+    assert linear_search.linear_search(n_iter, 56) == -1
