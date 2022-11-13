@@ -27,6 +27,9 @@ def test_three_element_iterable_matched_returns_1():
 def test_returns_correct_element_index_in_natural_numbers_iterable():
     n_iter = [1, 3, 5, 7, 9, 10, 11, 14, 17]
     assert binary_search.binary_search(n_iter, 11) == 6
+    assert binary_search.binary_search(n_iter, 11, low=3) == 6
+    assert binary_search.binary_search(n_iter, 11, low=3, high=7) == 6
+    assert binary_search.binary_search(n_iter, 11, low=3, high=5) == -1
 
 
 def test_returns_correct_index_on_negative_element_iterable_as_well():
@@ -36,6 +39,7 @@ def test_returns_correct_index_on_negative_element_iterable_as_well():
     assert binary_search.binary_search(n_iter, -99) == 0
     assert binary_search.binary_search(n_iter, 0) == 4
     assert binary_search.binary_search(n_iter, 56) == -1
+    assert binary_search.binary_search(n_iter, -99, low=4, high=0) == -1
 
 
 # ============================================ position finder related test cases =====================================#
@@ -56,6 +60,7 @@ def test_gives_mid_index_in_iterable_where_element_is_found():
     assert binary_search.find_position_in_sorted_iterable(n_iter, 2) == 2
     assert binary_search.find_position_in_sorted_iterable(n_iter, 0) == 0
     assert binary_search.find_position_in_sorted_iterable(n_iter, 1) == 1
+    assert binary_search.find_position_in_sorted_iterable(n_iter, 1, low=1, high=2) == 1
 
 
 def test_returns_correct_insertion_index_on_negative_element_iterable_as_well():
