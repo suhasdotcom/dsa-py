@@ -1,3 +1,9 @@
+"""
+Implementation of insertion sort with the first principles. This insertion sort uses a binary search in it's sorted
+iterable part of the iterable to reduce number of comparisons
+"""
+
+
 from search.binary_search import find_position_in_sorted_iterable
 
 

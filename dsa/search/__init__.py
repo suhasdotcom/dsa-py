@@ -1,3 +1,8 @@
+"""
+Different search algorithms implementations
+"""
+
+
 import search.binary_search as binary_search
 import search.linear_search as linear_search
 
