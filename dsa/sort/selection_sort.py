@@ -1,7 +1,6 @@
 """
 Implementation of selection sort by the first principles
 """
-import math
 
 
 def selection_sort(a_iterable):

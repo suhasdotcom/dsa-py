@@ -1,3 +1,8 @@
+"""
+Implementation of Linear Search
+"""
+
+
 def linear_search(a_iterable, item_to_find):
     index = 0
     for element in a_iterable:
