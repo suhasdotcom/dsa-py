@@ -3,7 +3,7 @@ Implementation of binary-search and binary-search related algorithms and helpers
 """
 
 
-def binary_search(a_iterable, item_to_find, low=0, high=None):
+def binary_search(a_iterable, item_to_find, low=0, high=None, descending=False):
     """
     iterative binary search implementation
 
@@ -11,13 +11,14 @@ def binary_search(a_iterable, item_to_find, low=0, high=None):
     :param item_to_find: actual item to find
     :param low: lowest index to start binary search on, defaults to 0
     :param high: highest index to end binary search on, defaults to len(a_iterable)-1
+    :param descending: Whether the iterable is sorted in descending manner, defaults to False
     :return: index of item if found, -1 if not found
     """
-    low, high, mid = _binary_search_helper(a_iterable, item_to_find, low=low, high=high)
+    low, high, mid = _binary_search_helper(a_iterable, item_to_find, low=low, high=high, descending=descending)
     return mid if low <= high else -1
 
 
-def find_position_in_sorted_iterable(a_iterable, item_to_insert, low=0, high=None):
+def find_position_in_sorted_iterable(a_iterable, item_to_insert, low=0, high=None, descending=False):
     """
     finds position to insert an item in a sorted iterable, uses binary search
 
@@ -25,13 +26,20 @@ def find_position_in_sorted_iterable(a_iterable, item_to_insert, low=0, high=Non
     :param item_to_insert: actual item to insert
     :param low: lowest index to start binary search on, defaults to 0
     :param high: highest index to end binary search on, defaults to len(a_iterable)-1
+    :param descending: Whether the iterable is sorted in descending manner, defaults to False
     :return: index where to insert this item to
     """
-    low, high, mid = _binary_search_helper(a_iterable, item_to_insert, low=low, high=high)
-    return mid if low <= high else high + 1
+    low, high, mid = _binary_search_helper(a_iterable, item_to_insert, low=low, high=high, descending=descending)
+
+    if low <= high:
+        return mid
+    elif not descending:
+        return high + 1
+    else:
+        return low
 
 
-def _binary_search_helper(a_iterable, item, low=0, high=None):
+def _binary_search_helper(a_iterable, item, low=0, high=None, descending=False):
     """
     iterative binary-search helper function
 
@@ -39,6 +47,7 @@ def _binary_search_helper(a_iterable, item, low=0, high=None):
     :param item: item to judge position of
     :param low: lowest index to start binary search on, defaults to 0
     :param high: highest index to end binary search on, defaults to len(a_iterable)-1
+    :param descending: Whether the iterable is sorted in descending manner, defaults to False
     :return: a tuple denoting low, high and mid indices after all operations are done
     """
     a_iterable_length = len(a_iterable)
@@ -52,9 +61,11 @@ def _binary_search_helper(a_iterable, item, low=0, high=None):
         mid = (low + high) // 2
         if item == a_iterable[mid]:
             break
-        elif item > a_iterable[mid]:
+        elif (not descending and item > a_iterable[mid]) \
+                or (descending and item < a_iterable[mid]):
             low = mid + 1
-        elif item < a_iterable[mid]:
+        elif (not descending and item < a_iterable[mid]) \
+                or (descending and item > a_iterable[mid]):
             high = mid - 1
 
     return low, high, mid
