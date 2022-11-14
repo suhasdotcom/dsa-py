@@ -7,12 +7,13 @@ iterable part of the iterable to reduce number of comparisons
 from search.binary_search import find_position_in_sorted_iterable
 
 
-def insertion_sort(a_iterable):
+def insertion_sort(a_iterable, descending=False):
     """
     Sorts the iterable in ascending manner by performing insertion sort for O(lgn) comparisons using
     binary_search_position_finder
 
     :param a_iterable: a iterable to be sorted in ascending order
+    :param descending: Whether the iterable is to be sorted in descending manner, defaults to False
     :return: an ascending sorted iterable
     """
 
@@ -28,7 +29,8 @@ def insertion_sort(a_iterable):
         item_to_insert = a_iterable.pop(i)
         index_to_insert_item_at = find_position_in_sorted_iterable(a_iterable,
                                                                    item_to_insert,
-                                                                   high=i-1)
+                                                                   high=i-1,
+                                                                   descending=descending)
         a_iterable.insert(index_to_insert_item_at, item_to_insert)
         unsorted_iterable_first_index += 1
 
