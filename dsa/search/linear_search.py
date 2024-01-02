@@ -11,4 +11,3 @@ def linear_search(a_iterable, item_to_find):
         index += 1
 
     return -1
-
