@@ -1,40 +1,58 @@
-import math
-
 import data_structures.heap as heap
+import pytest
 
 
-# def test_empty_heap_iterable():
-#     assert heap.traverse_heap_iterable([]) == []
-#
-#
-# def test_single_element_iterable():
-#     assert heap.traverse_heap_iterable([-1000]) == [-1000]
-#
-#
-# def test_two_element_iterable():
-#     assert heap.traverse_heap_iterable([-1, 2]) == [-1, 2]
-#
-#
-# def test_four_element_iterable():
-#     assert heap.traverse_heap_iterable([1, 2, 3, 4]) == [1, 2, 4, 3]
-
-def test_empty_iterable_max_heapify():
-    assert heap.max_heapify([]) == []
+def test_max_heapify_for_no_element():
+    """
+    Must raise an :func: `AssertionError` as the provided index is less than 1.
+    """
+    with pytest.raises(AssertionError):
+        heap.heapify([], 0)
 
 
-def test_single_element_iterable_max_heapify():
-    assert heap.max_heapify([-1000]) == [-1000]
+def test_max_heapify_for_one_element():
+    assert heap.heapify([1], 1) == [1]
 
 
-def test_two_element_iterable_max_heapify():
-    assert heap.max_heapify([-1000, 2000]) == [2000, -1000]
+def test_max_heapify_for_two_elements_at_min_index():
+    """
+    Must shuffle the elements as root (the element 2) is less than the leaf (element 1).
+    """
+    assert heap.heapify([1, 2], 1) == [2, 1]
 
 
-def test_three_element_iterable_max_heapify():
-    assert heap.max_heapify([-1000, 2000, 100]) == [2000, -1000, 100]
+def test_max_heapify_for_two_elements_at_max_index():
+    """
+    No element shuffling will be done as root_index (2) has no leaves.
+    """
+    assert heap.heapify([1, 2], 2) == [1, 2]
 
 
-def test_ten_element_iterable_max_heapify():
-    a_iterable = [-99, 10000, 34, 2, 6, -90, -99999, -math.inf, math.inf, -26635]
-    max_heap = [math.inf, 10000, 34, 2, 6, -99, -90, -99999, -26635, -math.inf]
-    assert heap.max_heapify(a_iterable) == max_heap
+def test_max_heapify_for_three_elements():
+    """
+    First the left child (element 2) will be shuffled with root (element 1) then right child (element 3) will be
+    shuffled with root (element 2).
+    """
+    assert heap.heapify([1, 2, 3], 1) == [3, 1, 2]
+
+
+def test_max_heapify_for_three_elements_at_middle_index():
+    """
+    No shuffling will be done as root (element 2) has not children.
+    """
+    assert heap.heapify([1, 2, 3], 2) == [1, 2, 3]
+
+
+def test_max_heapify_for_four_elements_at_first_index():
+    """
+    Will shuffle only elements 1, 2, and 3 for root index shuffling. 4 will remain untouched.
+    """
+    assert heap.heapify([1, 2, 3, 4], 1) == ([3, 1, 2, 4])
+
+
+def test_max_heapify_for_four_elements_at_second_index():
+    """
+    Will shuffle only elements 2 and 4 for second index shuffling. 1 and 4 will remain untouched as 2nd element's
+    left index is 4 and right index is 5 and the iterable is only 4 elements long.
+    """
+    assert heap.heapify([1, 2, 3, 4], 2) == ([1, 4, 3, 2])

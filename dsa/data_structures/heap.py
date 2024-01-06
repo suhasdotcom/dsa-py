@@ -1,118 +1,62 @@
 """
-Multiple Heap implementations and related data structures
+Implementation of a priority queue in terms of heap datastructure.
+An array is visualized as a nearly complete binary tree. All the indices are started form 1 instead of 0.
 """
 
 
-def max_heapify(a_iterable, start_index=0):
+def parent_index(curr_index):
     """
-    Make a max heap out of provided iterable
-
-    :param a_iterable: the regular sequence iterable
-    :param start_index: start heapify, defaults to 0
-    :return: a heap iterable
+    Returns the parent index of current index. Assumes 1-based indexing.
+    :param curr_index: index whose parent index is to be determined.
+    :return: curr_index/2
     """
-
-    if len(a_iterable)-start_index < 2:
-        return a_iterable
-
-    _left_child_index = left_child_index(start_index, a_iterable)
-    _right_child_index = right_child_index(start_index, a_iterable)
-
-    if _left_child_index is not None \
-            and left_child_element(start_index, a_iterable) > a_iterable[start_index]:
-        a_iterable[start_index], a_iterable[_left_child_index] = \
-            a_iterable[_left_child_index], a_iterable[start_index]
-
-    if _right_child_index is not None \
-            and right_child_element(start_index, a_iterable) > a_iterable[start_index]:
-        a_iterable[start_index], a_iterable[_right_child_index] = \
-            a_iterable[_right_child_index], a_iterable[start_index]
-
-    if _left_child_index is not None:
-        max_heapify(a_iterable, _left_child_index)
-
-    if _right_child_index is not None:
-        max_heapify(a_iterable, _right_child_index)
-
-    return a_iterable
+    assert curr_index >= 1
+    return curr_index // 2
 
 
-def left_child_index(curr_index, a_iterable=None):
+def left_child_index(curr_index):
     """
-    Gives left child index for this iterable (2*i+1) if left-child-index in within the iterable or if the iterable
-    is None, None if index is beyond the given iterable
-
-    :param curr_index: current index
-    :param a_iterable: provided iterable, defaults to None
-    :return: left child index for this iterable (2*i+1), or None if index is beyond the given iterable
+    Returns the visualised left child of this index. Assumes 1-based indexing.
+    :param curr_index: index whose conceptualised left child is to be determined.
+    :return: curr_index * 2
     """
-    _left_child_index = 2 * curr_index + 1
-
-    if a_iterable is None:
-        return _left_child_index
-
-    if _left_child_index >= len(a_iterable):
-        return None
-
-    return _left_child_index
+    assert curr_index >= 1
+    return curr_index * 2
 
 
-def right_child_index(curr_index, a_iterable=None):
+def right_child_index(curr_index):
     """
-    Gives right child index for this iterable (2*i+2) if right-child-index in within the iterable or if the iterable
-    is None, None if index is beyond the given iterable
-
-    :param curr_index: current index
-    :param a_iterable: provided iterable, defaults to None
-    :return: right child index for this iterable (2*i+2), or None if index is beyond the given iterable
+    Returns the visualised right child for this index. Assumes 1-based indexing.
+    :param curr_index: index whose conceptualised right child is to be determined.
+    :return: curr_index * 2 + 1
     """
-    _right_child_index = 2 * curr_index + 2
-
-    if a_iterable is None:
-        return _right_child_index
-
-    if _right_child_index >= len(a_iterable):
-        return None
-
-    return _right_child_index
+    assert curr_index >= 1
+    return curr_index * 2 + 1
 
 
-def left_child_element(curr_index, a_iterable):
+def heapify(iterable, root_index, max=True):
     """
-    Gives left child for this iterable (2*i+1th element) if left-child-index in within the iterable limits
-    , None if index is beyond the given iterable
-
-    :param curr_index: current index
-    :param a_iterable: provided iterable
-    :return: left child element for this iterable (2*i+1th element), or None if index is beyond the given iterable
+    Correct a single violation in the heap at root_index. Assumes 1-based indexing.
+    :param iterable: the iterable to heapify at root index
+    :param root_index: the index to heapify
+    :param max: whether this is required to be max heap
+    :return: an iterable heapified at root_index
     """
-    _left_child_index = left_child_index(curr_index, a_iterable)
+    assert root_index >= 1
+    rc_index = right_child_index(root_index)
+    lc_index = left_child_index(root_index)
+    root_arr_index = root_index - 1
+    rc_arr_index = rc_index - 1
+    lc_arr_index = lc_index - 1
 
-    if _left_child_index is None:
-        return None
+    if lc_arr_index < len(iterable):
+        if not max and iterable[root_arr_index] > iterable[lc_arr_index]\
+                or max and iterable[root_arr_index] < iterable[lc_arr_index]:
+            iterable[root_arr_index], iterable[lc_arr_index] = iterable[lc_arr_index], iterable[root_arr_index]
 
-    return a_iterable[_left_child_index]
+    if rc_arr_index < len(iterable):
+        if not max and iterable[root_arr_index] > iterable[rc_arr_index]\
+                or max and iterable[root_arr_index] < iterable[rc_arr_index]:
+            iterable[root_arr_index], iterable[rc_arr_index] = iterable[rc_arr_index], iterable[root_arr_index]
 
-
-def right_child_element(curr_index, a_iterable=None):
-    """
-    Gives right child for this iterable (2*i+2nd element) if right-child-index in within the iterable limits
-    , None if index is beyond the given iterable
-
-    :param curr_index: current index
-    :param a_iterable: provided iterable
-    :return: right child element for this iterable (2*i+2nd element), or None if index is beyond the given iterable
-    """
-    _right_child_index = right_child_index(curr_index, a_iterable)
-
-    if _right_child_index is None:
-        return None
-
-    return a_iterable[_right_child_index]
-
-
-class HeapNode:
-    def __init__(self, value, right=None, left=None):
-        self.value = value
-        self.right = right
-        self.left = left
+    return iterable
